@@ -27,15 +27,21 @@ const {
 const { AccessToken } = Twilio.jwt;
 const { VideoGrant } = AccessToken;
 
-const accessToken = new AccessToken(accountSid, API_KEY_SID, API_KEY_SECRET);
 
-accessToken.identity = 'Brandon';
+const createToken = (identity) => {
+  const accessToken = new AccessToken(accountSid, API_KEY_SID, API_KEY_SECRET);
 
-const grant = new VideoGrant();
-grant.room = 'Room 1';
-accessToken.addGrant(grant);
+  accessToken.identity = identity;
 
-const jwt = accessToken.toJwt();
-console.log(jwt);
+  const grant = new VideoGrant();
+  grant.room = 'Room 1';
+  accessToken.addGrant(grant);
+
+  const jwt = accessToken.toJwt();
+  console.log({ [identity]: jwt });
+};
+
+createToken('Person 1');
+createToken('Person 2');
 
 server.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));
