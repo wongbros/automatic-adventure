@@ -11,25 +11,14 @@ const {
   API_KEY_SID,
   API_KEY_SECRET,
   SERVER_PORT,
-  ACCOUNT_SID: accountSid,
+  ACCOUNT_SID,
 } = process.env;
-
-// const client = new Twilio(API_KEY_SID, API_KEY_SECRET, { accountSid });
-
-// client.video.rooms.create({
-//   uniqueName: 'Room 1',
-//   type: 'group',
-//   recordParticipantsOnConnect: 'true',
-//   statusCallback: 'http://localhost:3000',
-// })
-//   .then(console.log);
 
 const { AccessToken } = Twilio.jwt;
 const { VideoGrant } = AccessToken;
 
-
 const createToken = (identity) => {
-  const accessToken = new AccessToken(accountSid, API_KEY_SID, API_KEY_SECRET);
+  const accessToken = new AccessToken(ACCOUNT_SID, API_KEY_SID, API_KEY_SECRET);
 
   accessToken.identity = identity;
 
