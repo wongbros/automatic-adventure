@@ -6,6 +6,7 @@ dotenv.config();
 const server = express();
 
 const Twilio = require('twilio');
+const { Pet } = require('../db');
 
 const {
   API_KEY_SID,
