@@ -1,5 +1,8 @@
+const dotenv = require('dotenv');
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 
+dotenv.config();
 mongoose.connect(process.env.DB);
 
 const db = mongoose.connection;
@@ -10,14 +13,14 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-const PetModel = new mongoose.Schema({
-  name: String,
-  room: String,
-  eligible_phone_numbers: Array,
-  sid: String,
+const petSchema = new mongoose.Schema({
+  name: { type: String, required: true },
+  room: { type: String, required: true, unique: true },
+  eligible_phone_numbers: { type: Array, required: true },
+  sid: { type: String, required: true, unique: true },
 });
 
-const Pet = mongoose.model('Pet', PetModel);
+const Pet = mongoose.model('Pet', petSchema);
 
 module.exports = {
   Pet,
