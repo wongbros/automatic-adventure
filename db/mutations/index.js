@@ -19,8 +19,8 @@ const createPet = ({
     });
 };
 
-const removePet = ({ sid }) => {
-  return Pet.deleteOne({ sid })
+const removePet = ({ room }) => {
+  return Pet.deleteOne({ room })
     .catch((err) => {
       console.error(err);
       throw err;
