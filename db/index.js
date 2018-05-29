@@ -17,7 +17,6 @@ const petSchema = new mongoose.Schema({
   name: { type: String, required: true },
   room: { type: String, required: true, unique: true },
   eligible_phone_numbers: { type: Array, required: true },
-  sid: { type: String, required: true, unique: true },
 });
 
 const Pet = mongoose.model('Pet', petSchema);
