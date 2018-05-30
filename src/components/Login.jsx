@@ -5,7 +5,7 @@ class Login extends Component {
   render() {
     return (
       <div>
-        <a href="/login">Login</a>
+        <a href={`${process.env.REACT_APP_SERVER_BASE}/login`}>Login</a>
       </div>
     );
   }

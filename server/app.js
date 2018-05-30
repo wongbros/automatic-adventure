@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
-const cors = require('cors');
 const { strategy } = require('./googleOauth');
 
 const {
@@ -31,6 +30,13 @@ app.use(morgan('combined'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({ secret, resave: true, saveUninitialized: true }));
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  next();
+});
+
 
 app.use(passport.initialize());
 app.use(passport.session());
