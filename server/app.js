@@ -33,6 +33,13 @@ app.use(expressSession({ secret, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.get('/test', (req, res) => {
+  console.log(req);
+  console.log(req.user);
+  console.log(req.isAuthenticated());
+  res.send('Hello');
+});
+
 app.get('/login', passport.authenticate('google', { scope: ['email'] }));
 
 app.get(
