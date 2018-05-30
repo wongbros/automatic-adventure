@@ -1,17 +1,13 @@
 global.Promise = require('bluebird');
-const express = require('express');
-const dotenv = require('dotenv');
-
-dotenv.config();
-const server = express();
-
+require('dotenv').config();
+const http = require('http');
+const app = require('./app');
 const Twilio = require('twilio');
-const { Pet } = require('../db');
 
 const {
   API_KEY_SID,
   API_KEY_SECRET,
-  SERVER_PORT,
+  PORT,
   ACCOUNT_SID,
 } = process.env;
 
@@ -34,4 +30,7 @@ const createToken = (identity) => {
 createToken('Person 1');
 createToken('Person 2');
 
-server.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));
+
+const server = http.Server(app);
+
+server.listen(PORT, () => console.log(`Listening on ${PORT}`));
