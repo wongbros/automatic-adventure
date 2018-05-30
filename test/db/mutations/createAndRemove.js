@@ -1,7 +1,7 @@
 const { expect } = require('chai');
 const { createUser, removeUser } = require('../../../db/mutations');
 
-describe('mutations', () => {
+describe('createAndRemove', () => {
   let user;
   const name = 'cooper';
   const email = 'fake_email@gmail.com';
