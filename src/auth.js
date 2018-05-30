@@ -1,3 +1,7 @@
-export default {
-  isAuthenticated: true,
+import { authenticated } from './service';
+
+const isAuthenticated = async () => {
+  await authenticated();
 };
+
+export default isAuthenticated();

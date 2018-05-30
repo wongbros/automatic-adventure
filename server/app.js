@@ -5,10 +5,12 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
+const cors = require('cors');
 const { strategy } = require('./googleOauth');
 
 const {
   PET_CLIENT_URL,
+  NODE_ENV,
   SESSION_SECRET: secret,
 } = process.env;
 
@@ -33,11 +35,8 @@ app.use(expressSession({ secret, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/test', (req, res) => {
-  console.log(req);
-  console.log(req.user);
-  console.log(req.isAuthenticated());
-  res.send('Hello');
+app.get('/authenticated', (req, res) => {
+  res.json({ authenticated: req.isAuthenticated() });
 });
 
 app.get('/login', passport.authenticate('google', { scope: ['email'] }));
@@ -48,10 +47,12 @@ app.get(
   (req, res) => res.redirect(PET_CLIENT_URL),
 );
 
-app.use(express.static(path.resolve(__dirname, '..', 'build')));
+const entry = NODE_ENV === 'production' ? 'build' : 'public';
+
+app.use(express.static(path.resolve(__dirname, '..', entry)));
 
 app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+  res.sendFile(path.resolve(__dirname, '..', entry, 'index.html'));
 });
 
 module.exports = app;

@@ -27,7 +27,7 @@ const Routes = () => (
   <Router>
     <div>
       <Route exact path="/" component={Landing} />
-      <Route path="/login" component={Login} />
+      <Route path="/auth" component={Login} />
       <PrivateRoute path="/media" component={Media} />
     </div>
   </Router>

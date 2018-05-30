@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './Login.css';
 
-const Login = () => (
-  <div>
-    <button>Login</button>
-  </div>
-);
+class Login extends Component {
+  render() {
+    return (
+      <div>
+        <a href="/login">Login</a>
+      </div>
+    );
+  }
+}
 
 export default Login;
