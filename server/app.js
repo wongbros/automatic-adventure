@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const passport = require('passport');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
@@ -40,8 +41,10 @@ app.get(
   (req, res) => res.redirect(PET_CLIENT_URL),
 );
 
-app.get('/', (req, res) => {
-  res.send('Success');
+app.use(express.static(path.resolve(__dirname, '..', 'build')));
+
+app.get('/*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
 });
 
 module.exports = app;
