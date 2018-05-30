@@ -1,7 +1,8 @@
 import { authenticated } from './service';
 
 const isAuthenticated = async () => {
-  await authenticated();
+  const result = await authenticated();
+  return result;
 };
 
-export default isAuthenticated();
+export default isAuthenticated;

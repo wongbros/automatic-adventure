@@ -12,6 +12,7 @@ const get = async ({ url }) => {
 export const authenticated = async () => {
   const url = '/authenticated';
   const json = await get({ url });
+  console.log(json);
   return json.authenticated;
 };
 

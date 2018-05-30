@@ -1,27 +1,11 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom';
-import './index.css';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Media from './components/Media';
 import Login from './components/Login';
 import Landing from './components/Landing';
-import auth from './auth';
+import PrivateRoute from './components/PrivateRoute';
+import './index.css';
 
-
-const PrivateRoute = ({ component: Component, ...rest }) => {
-  const render = (props) => {
-    return (
-      auth.isAuthenticated ?
-        <Component {...props} /> :
-        <Redirect to={{ pathname: '/login', state: { from: props.location } }} />
-    );
-  };
-  return (
-    <Route
-      {...rest}
-      render={render}
-    />
-  );
-};
 
 const Routes = () => (
   <Router>
