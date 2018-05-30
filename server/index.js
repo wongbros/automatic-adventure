@@ -7,7 +7,7 @@ const Twilio = require('twilio');
 const {
   API_KEY_SID,
   API_KEY_SECRET,
-  SERVER_PORT,
+  PORT,
   ACCOUNT_SID,
 } = process.env;
 
@@ -33,4 +33,4 @@ createToken('Person 2');
 
 const server = http.Server(app);
 
-server.listen(SERVER_PORT, () => console.log(`Listening on ${SERVER_PORT}`));
+server.listen(PORT, () => console.log(`Listening on ${PORT}`));
