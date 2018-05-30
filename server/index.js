@@ -3,7 +3,6 @@ require('dotenv').config();
 const http = require('http');
 const app = require('./app');
 const Twilio = require('twilio');
-const { Pet } = require('../db');
 
 const {
   API_KEY_SID,

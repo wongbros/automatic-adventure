@@ -1,25 +1,38 @@
 const { expect } = require('chai');
-const { createPet, removePet } = require('../../../db/mutations');
+const { createUser, removeUser } = require('../../../db/mutations');
 
 describe('mutations', () => {
-  it('can add a new pet and remove', () => {
-    const name = 'cooper';
-    const room = '234 Fake St';
-    const eligiblePhoneNumbers = ['4696826913', '4696826909'];
-    return createPet({
-      name,
-      room,
-      eligiblePhoneNumbers,
-    })
-      .then((pet) => {
-        expect(pet.name).to.equal(name);
-        expect(pet.room).to.equal(room);
-        expect(JSON.stringify(pet.eligible_phone_numbers))
-          .to.equal(JSON.stringify(eligiblePhoneNumbers));
-        return removePet({ room });
-      })
-      .then((deleted) => {
-        expect(deleted.ok).to.equal(1);
-      });
+  let user;
+  const name = 'cooper';
+  const email = 'fake_email@gmail.com';
+  const petName = 'brandon';
+  const room = '123 Fake St';
+  const eligiblePhoneNumbers = ['4696826913', '4696826909'];
+
+  after(() => {
+    if (user) {
+      removeUser({ email });
+    }
   });
+
+  it('can add a new user and remove', () => createUser({
+    name,
+    email,
+    petName,
+    room,
+    eligiblePhoneNumbers,
+  })
+    .then((createdUser) => {
+      user = createdUser;
+      expect(user.name).to.equal(name);
+      expect(user.email).to.equal(email);
+      expect(user.pet_name).to.equal(petName);
+      expect(user.room).to.equal(room);
+      expect(JSON.stringify(user.eligible_phone_numbers))
+        .to.equal(JSON.stringify(eligiblePhoneNumbers));
+      return removeUser({ email });
+    })
+    .then((deleted) => {
+      expect(deleted.ok).to.equal(1);
+    }));
 });

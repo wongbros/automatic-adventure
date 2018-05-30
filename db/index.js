@@ -13,14 +13,8 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
 });
 
-const petSchema = new mongoose.Schema({
-  name: { type: String, required: true },
-  room: { type: String, required: true, unique: true },
-  eligible_phone_numbers: { type: Array, required: true },
-});
-
-const Pet = mongoose.model('Pet', petSchema);
+const User = require('./user');
 
 module.exports = {
-  Pet,
+  User,
 };
