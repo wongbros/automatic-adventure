@@ -32,7 +32,7 @@ app.use(expressSession({ secret, resave: true, saveUninitialized: true }));
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/login', passport.authenticate('google', { scope: ['profile'] }));
+app.get('/login', passport.authenticate('google', { scope: ['email'] }));
 
 app.get(
   '/auth/google/callback',
