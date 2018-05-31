@@ -1,5 +1,5 @@
-const { findUserByEmail } = require('../db/queries');
-const { createUser } = require('../db/mutations');
+const { findUserByEmail } = require('../../db/queries');
+const { createUser } = require('../../db/mutations');
 const { Strategy } = require('passport-google-oauth20');
 
 const {

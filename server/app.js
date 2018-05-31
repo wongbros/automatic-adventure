@@ -5,7 +5,7 @@ const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
-const { strategy } = require('./googleOauth');
+const { strategy } = require('./services/googleOauth');
 
 const {
   PET_CLIENT_URL,
