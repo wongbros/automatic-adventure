@@ -1,3 +1,4 @@
+require('dotenv').config();
 const Twilio = require('twilio');
 
 const { AccessToken } = Twilio.jwt;

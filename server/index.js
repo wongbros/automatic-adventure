@@ -8,7 +8,6 @@ const {
   PORT,
 } = process.env;
 
-
 createToken('Person 1');
 createToken('Person 2');
 
