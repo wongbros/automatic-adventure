@@ -13,7 +13,7 @@ const Routes = () => (
     <div>
       <Route exact path="/" component={Landing} />
       <Route path="/auth" component={Login} />
-      <Route path="/Whitelist" component={Whitelist} />
+      <PrivateRoute path="/whitelist" component={Whitelist} />
       <PrivateRoute path="/media" component={Media} />
     </div>
   </Router>
