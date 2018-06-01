@@ -6,6 +6,7 @@ const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const { strategy } = require('./services/googleOauth');
 const {
+  connect,
   getUser,
   isAuthenticated,
   initiation,
@@ -59,5 +60,7 @@ app.get(
 app.post('/save-user', saveUser);
 
 app.post('/initiate', initiation);
+
+app.get('/connection', connect);
 
 module.exports = app;

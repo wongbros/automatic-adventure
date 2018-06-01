@@ -1,5 +1,16 @@
+const urlHash = require('url-hash');
 const { updateUser } = require('../../db/mutations');
 const { checkIsNumberAllowed } = require('../../db/queries');
+
+urlHash.config({
+  hashKey: process.env.HASH_KEY,
+});
+
+const connect = (req, res) => {
+  console.log('params', req.params);
+  console.log('query', req.query);
+  res.sendStatus(200);
+};
 
 const getUser = (req, res) => {
   console.log(req);
@@ -10,12 +21,12 @@ const initiation = (req, res) => {
   const { phoneNumber, email } = req.body;
   console.log(req.body);
   return checkIsNumberAllowed({ phoneNumber, email })
-    .then((isNumberAllowed) => {
-      console.log({ isNumberAllowed });
-      if (isNumberAllowed) {
+    .then((user) => {
+      if (user) {
         // text
-        const hash = 'token'; // create token in twilio
-        console.log(`${process.env.CALLER_BASE_URL}/media/${hash}`);
+        const hash = urlHash.create(`/media/connection/?user=usr-${user._id.toString()}`);
+        const url = `${process.env.CALLER_BASE_URL}${hash}`;
+        console.log({ url });
         res.sendStatus(200);
         return;
       }
@@ -40,6 +51,7 @@ const saveUser = (req, res) => {
 };
 
 module.exports = {
+  connect,
   getUser,
   initiation,
   isAuthenticated,
