@@ -10,7 +10,6 @@ const { updateUser } = require('../db/mutations');
 
 const {
   PET_CLIENT_URL,
-  NODE_ENV,
   SESSION_SECRET: secret,
 } = process.env;
 
@@ -59,14 +58,6 @@ app.get(
   passport.authenticate('google', { failureRedirect: '/login' }),
   (req, res) => res.redirect(PET_CLIENT_URL),
 );
-
-const entry = NODE_ENV === 'production' ? 'build' : 'public';
-
-app.use(express.static(path.resolve(__dirname, '..', entry)));
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', entry, 'index.html'));
-});
 
 app.post('/save-user', (req, res) => {
   console.log(req.body);
