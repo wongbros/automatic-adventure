@@ -9,11 +9,8 @@ const get = async ({ url }) => {
   return response.data;
 };
 
-const post = async ({ url, email, eligiblePhoneNumbers }) => {
-  const response = await axios.post(url, {
-    email,
-    eligiblePhoneNumbers,
-  });
+const post = async ({ url, data }) => {
+  const response = await axios.post(url, data);
   if (response.status !== 200) {
     console.error(response);
   }
@@ -37,7 +34,11 @@ export const getUserData = async () => {
 
 export const saveUserData = async (email, eligiblePhoneNumbers) => {
   const url = '/save-user';
-  const json = await post({ url, email, eligiblePhoneNumbers });
+  const data = {
+    email,
+    eligiblePhoneNumbers,
+  };
+  const json = await post({ url, data });
   console.log(json);
   return json.status;
 };
