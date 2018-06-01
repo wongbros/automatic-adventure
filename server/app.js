@@ -1,12 +1,15 @@
 const express = require('express');
-const path = require('path');
 const passport = require('passport');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const { strategy } = require('./services/googleOauth');
+<<<<<<< HEAD
 const { updateUser } = require('../db/mutations');
+=======
+const { initiation } = require('./services/handlers');
+>>>>>>> Add handlers and change app to routes
 
 const {
   PET_CLIENT_URL,
@@ -70,5 +73,7 @@ app.post('/save-user', (req, res) => {
       res.sendStatus(400).send(err);
     });
 });
+
+app.post('/connect', initiation);
 
 module.exports = app;
