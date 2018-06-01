@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const { strategy } = require('./services/googleOauth');
+const { updateUser } = require('../db/mutations');
 
 const {
   PET_CLIENT_URL,
@@ -28,6 +29,7 @@ const app = express();
 
 app.use(morgan('combined'));
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({ secret, resave: true, saveUninitialized: true }));
 
@@ -47,6 +49,11 @@ app.get('/authenticated', (req, res) => {
 
 app.get('/login', passport.authenticate('google', { scope: ['email'] }));
 
+app.get('/user', (req, res) => {
+  console.log(req);
+  res.json({ user: req.user });
+});
+
 app.get(
   '/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
@@ -59,6 +66,18 @@ app.use(express.static(path.resolve(__dirname, '..', entry)));
 
 app.get('/*', (req, res) => {
   res.sendFile(path.resolve(__dirname, '..', entry, 'index.html'));
+});
+
+app.post('/save-user', (req, res) => {
+  console.log(req.body);
+  return updateUser(req.body)
+    .then(() => {
+      res.sendStatus(200);
+    })
+    .catch((err) => {
+      console.error(err);
+      res.sendStatus(400).send(err);
+    });
 });
 
 module.exports = app;
