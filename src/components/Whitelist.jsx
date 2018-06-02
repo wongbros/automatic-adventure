@@ -47,11 +47,12 @@ class Whitelist extends React.Component {
       <div>whitelist
         <div>
           <ul>
-            {this.state.phoneNumbers.map((phoneNumber, index) =>
-              (<li key={`phone-${phoneNumber}`}>
+            {this.state.phoneNumbers.map((phoneNumber, index) => (
+              <li key={`phone-${phoneNumber}`}>
                 {phoneNumber}
                 <button onClick={() => this.deleteNumber(index)}>X</button>
-               </li>))}
+              </li>
+            ))}
           </ul>
         </div>
         <input
