@@ -1,4 +1,4 @@
-const { findUserByEmail } = require('../../db/queries');
+const { findUser } = require('../../db/queries');
 const { createUser } = require('../../db/mutations');
 const { Strategy } = require('passport-google-oauth20');
 
@@ -12,7 +12,7 @@ const strategyCallback = (accessToken, refreshToken, profile, cb) => {
   console.log(profile);
   const email = profile.emails[0].value;
   const name = profile.displayName;
-  return findUserByEmail({ email })
+  return findUser({ email })
     .then((user) => {
       if (!user) {
         return createUser({

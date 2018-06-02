@@ -6,6 +6,7 @@ const path = require('path');
 const app = require('./app');
 const socketio = require('socket.io');
 const { createToken } = require('./services/twilio');
+const { findUser } = require('../db/queries');
 
 const {
   PORT,
@@ -22,6 +23,29 @@ app.get('/token', (req, res) => {
     return;
   }
   res.sendStatus(404);
+});
+
+app.get('/connection', (req, res) => {
+  console.log('params', req.params);
+  console.log('query', req.query);
+  const { user, hash } = req.query;
+  if (!user || !hash) {
+    const error = new Error('Missing fields');
+    console.error(`user: ${user}, hash: ${hash}`);
+    res.sendStatus(404).send(error);
+    return;
+  }
+  const id = user.substring(4);
+  findUser({ id })
+    .then((foundUser) => {
+      if (!foundUser) {
+        res.sendStatus(404);
+        return;
+      }
+      console.log(foundUser);
+      socket.emit('token', createToken(foundUser.pet_name || 'Pet'));
+      res.json({ token: createToken(foundUser.name) });
+    });
 });
 
 const entry = NODE_ENV === 'production' ? 'build' : 'public';

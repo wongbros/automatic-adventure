@@ -1,8 +1,9 @@
 const { expect } = require('chai');
 const { createUser, removeUser } = require('../../../db/mutations');
-const { findUserByEmail } = require('../../../db/queries');
+const { findUser } = require('../../../db/queries');
 
-describe('findUsersByEmail', () => {
+describe('findUser', () => {
+  let user;
   const name = 'cooper';
   const email = 'fake_email@yahoo.com';
   const room = '123 Fake St';
@@ -13,16 +14,28 @@ describe('findUsersByEmail', () => {
     email,
     room,
     eligiblePhoneNumbers,
-  }));
+  })
+    .then((createdUser) => {
+      user = createdUser;
+    }));
 
   after(() => removeUser({ email }));
 
   it('can find user by email', () => (
-    findUserByEmail({ email })
-      .then((user) => {
-        expect(user.name).to.equal(name);
-        expect(user.email).to.equal(email);
-        expect(user.room).to.equal(room);
+    findUser({ email })
+      .then((foundUser) => {
+        expect(foundUser.name).to.equal(name);
+        expect(foundUser.email).to.equal(email);
+        expect(foundUser.room).to.equal(room);
       })
   ));
+
+  it('can find user by _id', () => {
+    findUser({ id: user.id })
+      .then((foundUser) => {
+        expect(foundUser.name).to.equal(name);
+        expect(foundUser.email).to.equal(email);
+        expect(foundUser.room).to.equal(room);
+      });
+  })
 });

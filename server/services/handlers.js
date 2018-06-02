@@ -6,12 +6,6 @@ urlHash.config({
   hashKey: process.env.HASH_KEY,
 });
 
-const connect = (req, res) => {
-  console.log('params', req.params);
-  console.log('query', req.query);
-  res.sendStatus(200);
-};
-
 const getUser = (req, res) => {
   console.log(req);
   res.json({ user: req.user });
@@ -51,7 +45,6 @@ const saveUser = (req, res) => {
 };
 
 module.exports = {
-  connect,
   getUser,
   initiation,
   isAuthenticated,

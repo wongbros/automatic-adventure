@@ -61,6 +61,4 @@ app.post('/save-user', saveUser);
 
 app.post('/initiate', initiation);
 
-app.get('/connection', connect);
-
 module.exports = app;
