@@ -4,7 +4,6 @@ import Media from './components/Media';
 import Landing from './components/Landing';
 import Home from './components/Home';
 import PrivateRoute from './components/PrivateRoute';
-import Whitelist from './components/Whitelist';
 import './index.css';
 
 
@@ -13,7 +12,6 @@ const Routes = () => (
     <div>
       <Route exact path="/" component={Landing} />
       <PrivateRoute path="/home" component={Home} />
-      <PrivateRoute path="/whitelist" component={Whitelist} />
       <PrivateRoute path="/media" component={Media} />
     </div>
   </Router>
