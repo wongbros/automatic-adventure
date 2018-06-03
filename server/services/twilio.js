@@ -23,6 +23,7 @@ const createToken = (identity) => {
 
   const jwt = accessToken.toJwt();
   console.log({ [identity]: jwt });
+  return jwt;
 };
 
 const client = Twilio(ACCOUNT_SID, AUTH_TOKEN);

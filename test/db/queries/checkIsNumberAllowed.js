@@ -19,8 +19,8 @@ describe('checkIsNumberAllowed', () => {
 
   it('can check if a number is in whitelist', () => (
     checkIsNumberAllowed({ phoneNumber: '4696826913', email })
-      .then((isNumberAllowed) => {
-        expect(isNumberAllowed).to.equal(true);
+      .then((user) => {
+        expect(user).not.to.equal(null);
       })
   ));
 });

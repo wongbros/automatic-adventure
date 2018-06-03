@@ -1,4 +1,5 @@
 const { User } = require('../');
+const { cleanObject } = require('../util');
 
 module.exports = ({
   email,
@@ -12,12 +13,7 @@ module.exports = ({
     pet_name: petName,
     eligible_phone_numbers: eligiblePhoneNumbers,
   };
-  const filteredUpdates = Object.entries(updates).reduce((acc, [key, value]) => {
-    if (value !== undefined) {
-      acc[key] = value;
-    }
-    return acc;
-  }, {});
+  const filteredUpdates = cleanObject(updates);
   const options = { new: true };
   return User.findOneAndUpdate(conditions, filteredUpdates, options)
     .catch((err) => {

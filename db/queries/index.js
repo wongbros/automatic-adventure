@@ -1,8 +1,8 @@
 
 const checkIsNumberAllowed = require('./checkIsNumberAllowed');
-const findUserByEmail = require('./findUserByEmail');
+const findUser = require('./findUser');
 
 module.exports = {
   checkIsNumberAllowed,
-  findUserByEmail,
+  findUser,
 };

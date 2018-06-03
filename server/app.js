@@ -1,19 +1,22 @@
 const express = require('express');
-const path = require('path');
 const passport = require('passport');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const { strategy } = require('./services/googleOauth');
-const { updateUser } = require('../db/mutations');
+const {
+  connect,
+  getUser,
+  isAuthenticated,
+  initiation,
+  saveUser,
+} = require('./services/handlers');
 
 const {
   PET_CLIENT_URL,
-  NODE_ENV,
   SESSION_SECRET: secret,
 } = process.env;
-
 
 passport.use(strategy);
 
@@ -39,20 +42,14 @@ app.use((req, res, next) => {
   next();
 });
 
-
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/authenticated', (req, res) => {
-  res.json({ authenticated: req.isAuthenticated() });
-});
+app.get('/authenticated', isAuthenticated);
 
 app.get('/login', passport.authenticate('google', { scope: ['email'] }));
 
-app.get('/user', (req, res) => {
-  console.log(req);
-  res.json({ user: req.user });
-});
+app.get('/user', getUser);
 
 app.get(
   '/auth/google/callback',
@@ -60,24 +57,8 @@ app.get(
   (req, res) => res.redirect(PET_CLIENT_URL),
 );
 
-const entry = NODE_ENV === 'production' ? 'build' : 'public';
+app.post('/save-user', saveUser);
 
-app.use(express.static(path.resolve(__dirname, '..', entry)));
-
-app.get('/*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '..', entry, 'index.html'));
-});
-
-app.post('/save-user', (req, res) => {
-  console.log(req.body);
-  return updateUser(req.body)
-    .then(() => {
-      res.sendStatus(200);
-    })
-    .catch((err) => {
-      console.error(err);
-      res.sendStatus(400).send(err);
-    });
-});
+app.post('/initiate', initiation);
 
 module.exports = app;
