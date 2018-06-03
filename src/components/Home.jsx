@@ -8,6 +8,7 @@ class Home extends Component {
     return (
       <div>
         <h1>Home</h1>
+        <a href={`${process.env.REACT_APP_SERVER_BASE}/logout`}>Logout</a>
         <Settings />
         <a href="/media">Start Camera</a>
       </div>
