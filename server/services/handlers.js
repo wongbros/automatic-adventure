@@ -13,12 +13,11 @@ const getUser = (req, res) => {
 
 const initiation = (req, res) => {
   const { phoneNumber, email } = req.body;
-  console.log(req.body);
   return checkIsNumberAllowed({ phoneNumber, email })
     .then((user) => {
       if (user) {
         // text
-        const hash = urlHash.create(`/media/connection/?user=usr-${user._id.toString()}`);
+        const hash = urlHash.create(`/media/connection?user=usr-${user._id.toString()}`);
         const url = `${process.env.CALLER_BASE_URL}${hash}`;
         console.log({ url });
         res.sendStatus(200);
@@ -33,7 +32,6 @@ const isAuthenticated = (req, res) => {
 };
 
 const saveUser = (req, res) => {
-  console.log(req.body);
   return updateUser(req.body)
     .then(() => {
       res.sendStatus(200);
@@ -49,4 +47,5 @@ module.exports = {
   initiation,
   isAuthenticated,
   saveUser,
+  urlHash,
 };

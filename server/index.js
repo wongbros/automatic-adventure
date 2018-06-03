@@ -7,6 +7,7 @@ const app = require('./app');
 const socketio = require('socket.io');
 const { createToken } = require('./services/twilio');
 const { findUser } = require('../db/queries');
+const { urlHash } = require('./services/handlers');
 
 const {
   PORT,
@@ -15,24 +16,17 @@ const {
 
 let socket;
 
-app.get('/token', (req, res) => {
-  console.log({ socket });
-  if (socket) {
-    socket.emit('token', createToken('Pet name'));
-    res.json({ token: createToken('Caller name') });
-    return;
-  }
-  res.sendStatus(404);
-});
-
 app.get('/connection', (req, res) => {
-  console.log('params', req.params);
-  console.log('query', req.query);
   const { user, hash } = req.query;
   if (!user || !hash) {
     const error = new Error('Missing fields');
     console.error(`user: ${user}, hash: ${hash}`);
     res.sendStatus(404).send(error);
+    return;
+  }
+  const hashedUrl = `/media${req.originalUrl}`;
+  if (!urlHash.check(hashedUrl)) {
+    res.sendStatus(404);
     return;
   }
   const id = user.substring(4);
@@ -42,9 +36,12 @@ app.get('/connection', (req, res) => {
         res.sendStatus(404);
         return;
       }
-      console.log(foundUser);
-      socket.emit('token', createToken(foundUser.pet_name || 'Pet'));
-      res.json({ token: createToken(foundUser.name) });
+      if (socket) {
+        socket.emit('token', createToken(foundUser.pet_name || 'Pet'));
+        res.json({ token: createToken(foundUser.name) });
+        return;
+      }
+      res.sendStatus(404);
     });
 });
 
