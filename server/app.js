@@ -53,8 +53,8 @@ app.get('/user', getUser);
 
 app.get(
   '/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => res.redirect(PET_CLIENT_URL),
+  passport.authenticate('google', { failureRedirect: '/' }),
+  (req, res) => res.redirect(`${PET_CLIENT_URL}/home`),
 );
 
 app.post('/save-user', saveUser);

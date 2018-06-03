@@ -44,7 +44,7 @@ class Whitelist extends React.Component {
 
   render() {
     return (
-      <div>whitelist
+      <div>
         <div>
           <ul>
             {this.state.phoneNumbers.map((phoneNumber, index) => (

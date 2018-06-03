@@ -4,6 +4,10 @@ import io from 'socket.io-client';
 import './Media.css';
 
 class Media extends Component {
+  state = {
+    room: undefined,
+  };
+
   componentDidMount() {
     const socket = io(process.env.REACT_APP_SERVER_BASE);
     socket.on('token', (token) => {
@@ -11,13 +15,23 @@ class Media extends Component {
       Video.connect(token, { name: 'Room 1' })
         .then((room) => {
           console.log('Successfully connected to room!', room);
+          this.setState({ room });
         }, console.error);
     });
   }
 
+  componentWillUnmount() {
+    if (this.state.room) {
+      this.state.room.disconnect();
+    }
+  }
+
   render() {
     return (
-      <div>Pet cam</div>
+      <div>
+        <h1>Pet cam has been started!</h1>
+        <a href="/home">Stop</a>
+      </div>
     );
   }
 }
