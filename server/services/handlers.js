@@ -32,6 +32,7 @@ const isAuthenticated = (req, res) => {
 };
 
 const saveUser = (req, res) => {
+  console.log('req.body:', req.body);
   return updateUser(req.body)
     .then(() => {
       res.sendStatus(200);

@@ -13,7 +13,9 @@ module.exports = ({
     pet_name: petName,
     eligible_phone_numbers: eligiblePhoneNumbers,
   };
+  console.log('updates:', updates);
   const filteredUpdates = cleanObject(updates);
+  console.log(filteredUpdates);
   const options = { new: true };
   return User.findOneAndUpdate(conditions, filteredUpdates, options)
     .catch((err) => {
