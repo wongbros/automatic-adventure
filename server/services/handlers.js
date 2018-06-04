@@ -7,7 +7,6 @@ urlHash.config({
 });
 
 const getUser = (req, res) => {
-  console.log(req);
   res.json({ user: req.user });
 };
 
@@ -31,6 +30,14 @@ const isAuthenticated = (req, res) => {
   res.json({ authenticated: req.isAuthenticated() });
 };
 
+const protectRoute = (req, res, next) => {
+  if (req.isAuthenticated()) {
+    next();
+    return;
+  }
+  res.sendStatus(404);
+};
+
 const saveUser = (req, res) => {
   return updateUser(req.body)
     .then(() => {
@@ -47,5 +54,6 @@ module.exports = {
   initiation,
   isAuthenticated,
   saveUser,
+  protectRoute,
   urlHash,
 };

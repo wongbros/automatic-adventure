@@ -1,34 +1,30 @@
 import axios from 'axios';
 
+const handleError = (error) => {
+  console.error(error);
+  alert('Oops! There seems to be a problem...');
+  document.location.reload();
+};
+
 const get = async ({ url }) => {
-  const response = await axios.get(url);
-  if (response.status !== 200) {
-    console.error(response);
-  }
-  console.log(response);
+  const response = await axios.get(url).catch(handleError);
   return response.data;
 };
 
 const post = async ({ url, data }) => {
-  const response = await axios.post(url, data);
-  if (response.status !== 200) {
-    console.error(response);
-  }
-  console.log(response);
+  const response = await axios.post(url, data).catch(handleError);
   return response.data;
 };
 
 export const authenticated = async () => {
   const url = '/authenticated';
   const json = await get({ url });
-  console.log(json);
   return json.authenticated;
 };
 
 export const getUserData = async () => {
   const url = '/user';
   const json = await get({ url });
-  console.log(json);
   return json.user;
 };
 
@@ -39,6 +35,5 @@ export const saveUserData = async (email, eligiblePhoneNumbers) => {
     eligiblePhoneNumbers,
   };
   const json = await post({ url, data });
-  console.log(json);
   return json.status;
 };

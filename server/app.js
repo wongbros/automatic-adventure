@@ -10,6 +10,7 @@ const {
   getUser,
   isAuthenticated,
   initiation,
+  protectRoute,
   saveUser,
 } = require('./services/handlers');
 
@@ -49,7 +50,7 @@ app.get('/authenticated', isAuthenticated);
 
 app.get('/login', passport.authenticate('google', { scope: ['email'] }));
 
-app.get('/user', getUser);
+app.get('/user', protectRoute, getUser);
 
 app.get(
   '/auth/google/callback',
@@ -57,8 +58,8 @@ app.get(
   (req, res) => res.redirect(`${PET_CLIENT_URL}/home`),
 );
 
-app.post('/save-user', saveUser);
+app.post('/save-user', protectRoute, saveUser);
 
-app.post('/initiate', initiation);
+app.post('/initiate', protectRoute, initiation);
 
 module.exports = app;
