@@ -28,11 +28,18 @@ export const getUserData = async () => {
   return json.user;
 };
 
-export const saveUserData = async (email, eligiblePhoneNumbers) => {
+export const saveUserData = async ({
+  email,
+  eligiblePhoneNumbers,
+  petName,
+  room,
+}) => {
   const url = '/save-user';
   const data = {
     email,
     eligiblePhoneNumbers,
+    petName,
+    room,
   };
   const json = await post({ url, data });
   return json.status;

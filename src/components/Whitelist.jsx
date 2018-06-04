@@ -32,14 +32,14 @@ class Whitelist extends React.Component {
       phoneNumber: '',
       phoneNumbers: updatedNumberList,
     });
-    await saveUserData(this.state.email, updatedNumberList);
+    await saveUserData({ email: this.state.email, eligiblePhoneNumbers: updatedNumberList });
   }
 
   deleteNumber = async (index) => {
     const updatedNumberList = [...this.state.phoneNumbers];
     updatedNumberList.splice(index, 1);
     this.setState({ phoneNumbers: updatedNumberList });
-    await saveUserData(this.state.email, updatedNumberList);
+    await saveUserData({ email: this.state.email, eligiblePhoneNumbers: updatedNumberList });
   }
 
   render() {
@@ -55,11 +55,13 @@ class Whitelist extends React.Component {
             ))}
           </ul>
         </div>
-        <input
-          type="text"
-          value={this.state.phoneNumber}
-          onChange={this.updateCurrentNumber}
-        />
+        <div>
+          <input
+            type="text"
+            value={this.state.phoneNumber}
+            onChange={this.updateCurrentNumber}
+          />
+        </div>
         <button onClick={this.saveNumber}>Save</button>
       </div>
     );
