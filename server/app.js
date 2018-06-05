@@ -6,7 +6,6 @@ const bodyParser = require('body-parser');
 const expressSession = require('express-session');
 const { strategy } = require('./services/googleOauth');
 const {
-  connect,
   getUser,
   isAuthenticated,
   initiation,
@@ -49,6 +48,11 @@ app.use(passport.session());
 app.get('/authenticated', isAuthenticated);
 
 app.get('/login', passport.authenticate('google', { scope: ['email'] }));
+
+app.get('/logout', (req, res) => {
+  req.logout();
+  res.redirect(PET_CLIENT_URL);
+});
 
 app.get('/user', protectRoute, getUser);
 
