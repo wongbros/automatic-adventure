@@ -1,59 +1,57 @@
 import React from 'react';
-import { getUserData, saveUserData } from '../service';
+import PropTypes from 'prop-types';
+// import { /* getUserData, */ saveUserData } from '../service';
 
 class Details extends React.Component {
-  state = {
+  static defaultProps = {
     petName: '',
     roomName: '',
-    email: '',
   }
 
-  async componentDidMount() {
-    await this.getDetails();
+  static propTypes = {
+    petName: PropTypes.string,
+    roomName: PropTypes.string,
+    update: PropTypes.func.isRequired,
   }
 
-  getDetails = async () => {
-    const userData = await getUserData();
-    const { email } = userData;
-    const petName = userData.pet_name;
-    const roomName = userData.room;
-    this.setState({ petName, roomName, email });
+  state = {
+    petName: this.props.petName,
+    roomName: this.props.roomName,
   }
 
   update = (stateName, value) => {
     this.setState({ [stateName]: value });
+    this.props.update(stateName, value);
   }
 
-  saveDetails = async () => {
-    await saveUserData({
-      email: this.state.email,
-      petName: this.state.petName,
-      room: this.state.roomName,
-    });
-  }
+  // saveDetails = async () => {
+  //   await saveUserData({
+  //     petName: this.state.petName,
+  //     room: this.state.roomName,
+  //   });
+  // }
 
   render() {
     return (
       <div>
-        <div>Pet Name: {this.state.petName}</div>
-        <div>Room Name: {this.state.roomName}</div>
         <div>
+          <div>Pet Name: {this.props.petName}</div>
           <input
             type="text"
             value={this.state.petName}
-            onChange={e => this.update('petName', e.target.value)}
             placeholder="Update Pet Name"
+            onChange={event => this.update('petName', event.target.value)}
           />
         </div>
         <div>
+          <div>Room Name: {this.props.roomName}</div>
           <input
             type="text"
             value={this.state.roomName}
-            onChange={e => this.update('roomName', e.target.value)}
             placeholder="Update Room Name"
+            onChange={event => this.update('roomName', event.target.value)}
           />
         </div>
-        <button onClick={this.saveDetails}>Save</button>
       </div>
     );
   }

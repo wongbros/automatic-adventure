@@ -1,23 +1,20 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Whitelist.css';
-import { getUserData, saveUserData } from '../service';
+// import { /* getUserData, */ saveUserData } from '../service';
 
 class Whitelist extends React.Component {
+  static defaultProps = {
+    phoneNumbers: [],
+  }
+
+  static propTypes = {
+    phoneNumbers: PropTypes.arrayOf(PropTypes.string),
+    update: PropTypes.func.isRequired,
+  }
+
   state = {
     phoneNumber: '',
-    phoneNumbers: [],
-    email: '',
-  }
-
-  async componentDidMount() {
-    await this.getPhoneNumbers();
-  }
-
-  getPhoneNumbers = async () => {
-    const userData = await getUserData();
-    const phoneNumbers = userData.eligible_phone_numbers;
-    const { email } = userData;
-    this.setState({ phoneNumbers, email });
   }
 
   updateCurrentNumber = (event) => {
@@ -25,29 +22,32 @@ class Whitelist extends React.Component {
     this.setState({ phoneNumber: currentNumber });
   }
 
-  saveNumber = async () => {
-    const updatedNumberList = [...this.state.phoneNumbers];
+  insertNumber = () => {
+    const updatedNumberList = [...this.props.phoneNumbers];
     updatedNumberList.push(this.state.phoneNumber);
     this.setState({
       phoneNumber: '',
-      phoneNumbers: updatedNumberList,
+      // phoneNumbers: updatedNumberList,
     });
-    await saveUserData({ email: this.state.email, eligiblePhoneNumbers: updatedNumberList });
+    this.props.update('phoneNumbers', updatedNumberList);
+    // await saveUserData({ eligiblePhoneNumbers: updatedNumberList });
   }
 
-  deleteNumber = async (index) => {
-    const updatedNumberList = [...this.state.phoneNumbers];
+  deleteNumber = (index) => {
+    const updatedNumberList = [...this.props.phoneNumbers];
     updatedNumberList.splice(index, 1);
-    this.setState({ phoneNumbers: updatedNumberList });
-    await saveUserData({ email: this.state.email, eligiblePhoneNumbers: updatedNumberList });
+    // this.setState({ phoneNumbers: updatedNumberList });
+    this.props.update('phoneNumbers', updatedNumberList);
+    // await saveUserData({ eligiblePhoneNumbers: updatedNumberList });
   }
 
   render() {
     return (
       <div>
         <div>
+        Saved Numbers:
           <ul>
-            {this.state.phoneNumbers.map((phoneNumber, index) => (
+            {this.props.phoneNumbers.map((phoneNumber, index) => (
               <li key={`phone-${phoneNumber}`}>
                 {phoneNumber}
                 <button onClick={() => this.deleteNumber(index)}>X</button>
@@ -61,8 +61,8 @@ class Whitelist extends React.Component {
             value={this.state.phoneNumber}
             onChange={this.updateCurrentNumber}
           />
+          <button onClick={this.insertNumber}>+</button>
         </div>
-        <button onClick={this.saveNumber}>Save</button>
       </div>
     );
   }

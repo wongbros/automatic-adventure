@@ -34,6 +34,10 @@ export const saveUserData = async ({
   petName,
   room,
 }) => {
+  console.log(eligiblePhoneNumbers);
+  console.log(email);
+  console.log(petName);
+  console.log(room);
   const url = '/save-user';
   const data = {
     email,
