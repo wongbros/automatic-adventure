@@ -43,9 +43,9 @@ class Whitelist extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="whitelist">
+        <h4>Whitelist Numbers</h4>
         <div>
-        Saved Numbers:
           <ul>
             {this.props.phoneNumbers.map((phoneNumber, index) => (
               <li key={`phone-${phoneNumber}`}>

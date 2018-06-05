@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { /* getUserData, */ saveUserData } from '../service';
 
 class Details extends React.Component {
   static defaultProps = {
@@ -11,31 +10,30 @@ class Details extends React.Component {
   static propTypes = {
     petName: PropTypes.string,
     roomName: PropTypes.string,
-    update: PropTypes.func.isRequired,
+    saveUserData: PropTypes.func.isRequired,
   }
 
   state = {
-    petName: this.props.petName,
-    roomName: this.props.roomName,
+    petName: '',
+    roomName: '',
   }
 
   update = (stateName, value) => {
     this.setState({ [stateName]: value });
-    this.props.update(stateName, value);
   }
 
-  // saveDetails = async () => {
-  //   await saveUserData({
-  //     petName: this.state.petName,
-  //     room: this.state.roomName,
-  //   });
-  // }
+  saveUserData = async () => {
+    await this.props.saveUserData(this.state);
+    this.setState({ petName: '', roomName: '' });
+  }
 
   render() {
     return (
-      <div>
+      <div className="details">
+        <h4>Details</h4>
+        <div>Pet Name: {this.props.petName}</div>
+        <div>Room Name: {this.props.roomName}</div>
         <div>
-          <div>Pet Name: {this.props.petName}</div>
           <input
             type="text"
             value={this.state.petName}
@@ -44,7 +42,6 @@ class Details extends React.Component {
           />
         </div>
         <div>
-          <div>Room Name: {this.props.roomName}</div>
           <input
             type="text"
             value={this.state.roomName}
@@ -52,6 +49,7 @@ class Details extends React.Component {
             onChange={event => this.update('roomName', event.target.value)}
           />
         </div>
+        <button onClick={this.saveUserData}>Save Details</button>
       </div>
     );
   }

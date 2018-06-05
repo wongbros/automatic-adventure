@@ -17,7 +17,7 @@ class Settings extends Component {
 
   getUserData = async () => {
     const userData = await getUserData();
-    console.log(userData);
+    console.log('userData', userData);
     const { email } = userData;
     const petName = userData.pet_name;
     const roomName = userData.room;
@@ -31,20 +31,15 @@ class Settings extends Component {
     // console.log('state: ', this.state);
   }
 
-  updateUserData = (stateName, value) => {
-    this.setState({ [stateName]: value });
-  }
-
-  saveUserData = async () => {
+  saveUserData = async ({ petName, roomName, phoneNumbers }) => {
     await saveUserData({
+      petName,
+      room: roomName,
       email: this.state.email,
-      petName: this.state.petName,
-      room: this.state.roomName,
-      eligiblePhoneNumbers: this.state.phoneNumbers,
+      eligiblePhoneNumbers: phoneNumbers,
     });
     // re-fetch
     this.getUserData();
-    console.log(this.state);
   }
 
   render() {
@@ -53,7 +48,7 @@ class Settings extends Component {
         <div>
           <h3>Settings</h3>
           <Details
-            update={this.updateUserData}
+            saveUserData={this.saveUserData}
             email={this.state.email}
             petName={this.state.petName}
             roomName={this.state.roomName}
@@ -63,7 +58,6 @@ class Settings extends Component {
             email={this.state.email}
             phoneNumbers={this.state.phoneNumbers}
           />
-          <button onClick={this.saveUserData}>Save</button>
         </div>
       </div>
     );
