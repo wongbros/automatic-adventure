@@ -10,8 +10,8 @@ class Settings extends Component {
     phoneNumbers: [],
     petName: '',
     roomName: '',
-    isShowing: true,
-    settingsHeader: 'Hide Settings',
+    isShowing: false,
+    settingsHeader: 'Show Settings',
   };
 
   async componentDidMount() {
@@ -45,8 +45,7 @@ class Settings extends Component {
   }
 
   toggleSettingsView = () => {
-    let { settingsHeader } = this.state;
-    settingsHeader = settingsHeader === 'Hide Settings' ? 'Show Settings' : 'Hide Settings';
+    const settingsHeader = !this.state.isShowing ? 'Hide Settings' : 'Show Settings';
     this.setState({ settingsHeader, isShowing: !this.state.isShowing });
   }
 
