@@ -10,8 +10,8 @@ class Settings extends Component {
     phoneNumbers: [],
     petName: '',
     roomName: '',
+    isShowing: true,
     settingsHeader: 'Hide Settings',
-    settingsBlock: 'showBlock',
   };
 
   async componentDidMount() {
@@ -45,10 +45,9 @@ class Settings extends Component {
   }
 
   toggleSettingsView = () => {
-    let { settingsHeader, settingsBlock } = this.state;
+    let { settingsHeader } = this.state;
     settingsHeader = settingsHeader === 'Hide Settings' ? 'Show Settings' : 'Hide Settings';
-    settingsBlock = settingsBlock === 'showBlock' ? 'hideBlock' : 'showBlock';
-    this.setState({ settingsHeader, settingsBlock });
+    this.setState({ settingsHeader, isShowing: !this.state.isShowing });
   }
 
   render() {
@@ -57,26 +56,28 @@ class Settings extends Component {
         <div>
           <h3>
             <div
-              className="settingsToggle"
               onClick={this.toggleSettingsView}
+              onKeyPress={this.toggleSettingsView}
+              tabIndex={0}
               role="button"
             >
               {this.state.settingsHeader}
             </div>
           </h3>
-          <div className={this.state.settingsBlock}>
-            <Details
-              saveUserData={this.saveUserData}
-              email={this.state.email}
-              petName={this.state.petName}
-              roomName={this.state.roomName}
-            />
-            <Whitelist
-              saveUserData={this.saveUserData}
-              email={this.state.email}
-              phoneNumbers={this.state.phoneNumbers}
-            />
-          </div>
+          {this.state.isShowing &&
+            <div>
+              <Details
+                saveUserData={this.saveUserData}
+                email={this.state.email}
+                petName={this.state.petName}
+                roomName={this.state.roomName}
+              />
+              <Whitelist
+                saveUserData={this.saveUserData}
+                email={this.state.email}
+                phoneNumbers={this.state.phoneNumbers}
+              />
+            </div>}
         </div>
       </div>
     );
