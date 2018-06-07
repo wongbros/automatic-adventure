@@ -1,13 +1,19 @@
 const urlHash = require('url-hash');
 const { updateUser } = require('../../db/mutations');
-const { checkIsNumberAllowed } = require('../../db/queries');
+const { checkIsNumberAllowed, findUser } = require('../../db/queries');
 
 urlHash.config({
   hashKey: process.env.HASH_KEY,
 });
 
 const getUser = (req, res) => {
-  res.json({ user: req.user });
+  return findUser({ email: req.user.email })
+    .then((user) => {
+      if (!user) {
+        res.sendStatus(404);
+      }
+      res.json({ user });
+    });
 };
 
 const initiation = (req, res) => {

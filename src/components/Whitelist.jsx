@@ -1,23 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import './Whitelist.css';
-import { getUserData, saveUserData } from '../service';
 
 class Whitelist extends React.Component {
+  static defaultProps = {
+    phoneNumbers: [],
+  }
+
+  static propTypes = {
+    phoneNumbers: PropTypes.arrayOf(PropTypes.string),
+    saveUserData: PropTypes.func.isRequired,
+  }
+
   state = {
     phoneNumber: '',
-    phoneNumbers: [],
-    email: '',
-  }
-
-  async componentDidMount() {
-    await this.getPhoneNumbers();
-  }
-
-  getPhoneNumbers = async () => {
-    const userData = await getUserData();
-    const phoneNumbers = userData.eligible_phone_numbers;
-    const { email } = userData;
-    this.setState({ phoneNumbers, email });
   }
 
   updateCurrentNumber = (event) => {
@@ -25,29 +21,28 @@ class Whitelist extends React.Component {
     this.setState({ phoneNumber: currentNumber });
   }
 
-  saveNumber = async () => {
-    const updatedNumberList = [...this.state.phoneNumbers];
+  saveNumber = () => {
+    const updatedNumberList = [...this.props.phoneNumbers];
     updatedNumberList.push(this.state.phoneNumber);
     this.setState({
       phoneNumber: '',
-      phoneNumbers: updatedNumberList,
     });
-    await saveUserData({ email: this.state.email, eligiblePhoneNumbers: updatedNumberList });
+    this.props.saveUserData({ phoneNumbers: updatedNumberList });
   }
 
-  deleteNumber = async (index) => {
-    const updatedNumberList = [...this.state.phoneNumbers];
+  deleteNumber = (index) => {
+    const updatedNumberList = [...this.props.phoneNumbers];
     updatedNumberList.splice(index, 1);
-    this.setState({ phoneNumbers: updatedNumberList });
-    await saveUserData({ email: this.state.email, eligiblePhoneNumbers: updatedNumberList });
+    this.props.saveUserData({ phoneNumbers: updatedNumberList });
   }
 
   render() {
     return (
-      <div>
+      <div className="whitelist">
+        <h4>Whitelist Numbers</h4>
         <div>
           <ul>
-            {this.state.phoneNumbers.map((phoneNumber, index) => (
+            {this.props.phoneNumbers.map((phoneNumber, index) => (
               <li key={`phone-${phoneNumber}`}>
                 {phoneNumber}
                 <button onClick={() => this.deleteNumber(index)}>X</button>
@@ -59,10 +54,11 @@ class Whitelist extends React.Component {
           <input
             type="text"
             value={this.state.phoneNumber}
+            placeholder="Add Phone Number"
             onChange={this.updateCurrentNumber}
           />
         </div>
-        <button onClick={this.saveNumber}>Save</button>
+        <button onClick={this.saveNumber}>Save Number</button>
       </div>
     );
   }
