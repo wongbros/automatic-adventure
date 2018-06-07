@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Whitelist from './Whitelist';
 import Details from './Details';
 import { getUserData, saveUserData } from '../service';
+import './Settings.css';
 
 class Settings extends Component {
   state = {
@@ -9,6 +10,8 @@ class Settings extends Component {
     phoneNumbers: [],
     petName: '',
     roomName: '',
+    isShowing: false,
+    settingsHeader: 'Show Settings',
   };
 
   async componentDidMount() {
@@ -41,22 +44,39 @@ class Settings extends Component {
     this.getUserData();
   }
 
+  toggleSettingsView = () => {
+    const settingsHeader = !this.state.isShowing ? 'Hide Settings' : 'Show Settings';
+    this.setState({ settingsHeader, isShowing: !this.state.isShowing });
+  }
+
   render() {
     return (
       <div>
         <div>
-          <h3>Settings</h3>
-          <Details
-            saveUserData={this.saveUserData}
-            email={this.state.email}
-            petName={this.state.petName}
-            roomName={this.state.roomName}
-          />
-          <Whitelist
-            saveUserData={this.saveUserData}
-            email={this.state.email}
-            phoneNumbers={this.state.phoneNumbers}
-          />
+          <h3>
+            <div
+              onClick={this.toggleSettingsView}
+              onKeyPress={this.toggleSettingsView}
+              tabIndex={0}
+              role="button"
+            >
+              {this.state.settingsHeader}
+            </div>
+          </h3>
+          {this.state.isShowing &&
+            <div>
+              <Details
+                saveUserData={this.saveUserData}
+                email={this.state.email}
+                petName={this.state.petName}
+                roomName={this.state.roomName}
+              />
+              <Whitelist
+                saveUserData={this.saveUserData}
+                email={this.state.email}
+                phoneNumbers={this.state.phoneNumbers}
+              />
+            </div>}
         </div>
       </div>
     );
