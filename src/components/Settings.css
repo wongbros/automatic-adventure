@@ -1,0 +1,11 @@
+.showBlock {
+  display:block;
+}
+
+.hideBlock {
+  display:none;
+}
+
+.settingsToggle {
+  cursor: pointer;
+}

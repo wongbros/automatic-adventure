@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Whitelist from './Whitelist';
 import Details from './Details';
 import { getUserData, saveUserData } from '../service';
+import './Settings.css';
 
 class Settings extends Component {
   state = {
@@ -9,6 +10,8 @@ class Settings extends Component {
     phoneNumbers: [],
     petName: '',
     roomName: '',
+    settingsHeader: 'Hide Settings',
+    settingsBlock: 'showBlock',
   };
 
   async componentDidMount() {
@@ -41,22 +44,39 @@ class Settings extends Component {
     this.getUserData();
   }
 
+  toggleSettingsView = () => {
+    let { settingsHeader, settingsBlock } = this.state;
+    settingsHeader = settingsHeader === 'Hide Settings' ? 'Show Settings' : 'Hide Settings';
+    settingsBlock = settingsBlock === 'showBlock' ? 'hideBlock' : 'showBlock';
+    this.setState({ settingsHeader, settingsBlock });
+  }
+
   render() {
     return (
       <div>
         <div>
-          <h3>Settings</h3>
-          <Details
-            saveUserData={this.saveUserData}
-            email={this.state.email}
-            petName={this.state.petName}
-            roomName={this.state.roomName}
-          />
-          <Whitelist
-            saveUserData={this.saveUserData}
-            email={this.state.email}
-            phoneNumbers={this.state.phoneNumbers}
-          />
+          <h3>
+            <div
+              className="settingsToggle"
+              onClick={this.toggleSettingsView}
+              role="button"
+            >
+              {this.state.settingsHeader}
+            </div>
+          </h3>
+          <div className={this.state.settingsBlock}>
+            <Details
+              saveUserData={this.saveUserData}
+              email={this.state.email}
+              petName={this.state.petName}
+              roomName={this.state.roomName}
+            />
+            <Whitelist
+              saveUserData={this.saveUserData}
+              email={this.state.email}
+              phoneNumbers={this.state.phoneNumbers}
+            />
+          </div>
         </div>
       </div>
     );
