@@ -17,7 +17,6 @@ class Settings extends Component {
 
   getUserData = async () => {
     const userData = await getUserData();
-    console.log('userData', userData);
     const { email } = userData;
     const petName = userData.pet_name;
     const roomName = userData.room;
@@ -54,7 +53,7 @@ class Settings extends Component {
             roomName={this.state.roomName}
           />
           <Whitelist
-            update={this.updateUserData}
+            saveUserData={this.saveUserData}
             email={this.state.email}
             phoneNumbers={this.state.phoneNumbers}
           />

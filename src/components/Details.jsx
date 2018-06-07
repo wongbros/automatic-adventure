@@ -18,6 +18,15 @@ class Details extends React.Component {
     roomName: '',
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.petName !== this.props.petName) {
+      this.setState({ petName: nextProps.petName });
+    }
+    if (nextProps.roomName !== this.props.roomName) {
+      this.setState({ roomName: nextProps.roomName });
+    }
+  }
+
   update = (stateName, value) => {
     this.setState({ [stateName]: value });
   }
@@ -36,7 +45,6 @@ class Details extends React.Component {
         <div>
           <input
             type="text"
-            value={this.state.petName}
             placeholder="Update Pet Name"
             onChange={event => this.update('petName', event.target.value)}
           />
@@ -44,7 +52,6 @@ class Details extends React.Component {
         <div>
           <input
             type="text"
-            value={this.state.roomName}
             placeholder="Update Room Name"
             onChange={event => this.update('roomName', event.target.value)}
           />

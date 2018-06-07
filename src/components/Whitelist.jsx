@@ -1,7 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import './Whitelist.css';
-// import { /* getUserData, */ saveUserData } from '../service';
 
 class Whitelist extends React.Component {
   static defaultProps = {
@@ -10,7 +9,7 @@ class Whitelist extends React.Component {
 
   static propTypes = {
     phoneNumbers: PropTypes.arrayOf(PropTypes.string),
-    update: PropTypes.func.isRequired,
+    saveUserData: PropTypes.func.isRequired,
   }
 
   state = {
@@ -22,23 +21,19 @@ class Whitelist extends React.Component {
     this.setState({ phoneNumber: currentNumber });
   }
 
-  insertNumber = () => {
+  saveNumber = () => {
     const updatedNumberList = [...this.props.phoneNumbers];
     updatedNumberList.push(this.state.phoneNumber);
     this.setState({
       phoneNumber: '',
-      // phoneNumbers: updatedNumberList,
     });
-    this.props.update('phoneNumbers', updatedNumberList);
-    // await saveUserData({ eligiblePhoneNumbers: updatedNumberList });
+    this.props.saveUserData({ phoneNumbers: updatedNumberList });
   }
 
   deleteNumber = (index) => {
     const updatedNumberList = [...this.props.phoneNumbers];
     updatedNumberList.splice(index, 1);
-    // this.setState({ phoneNumbers: updatedNumberList });
-    this.props.update('phoneNumbers', updatedNumberList);
-    // await saveUserData({ eligiblePhoneNumbers: updatedNumberList });
+    this.props.saveUserData({ phoneNumbers: updatedNumberList });
   }
 
   render() {
@@ -59,10 +54,11 @@ class Whitelist extends React.Component {
           <input
             type="text"
             value={this.state.phoneNumber}
+            placeholder="Add Phone Number"
             onChange={this.updateCurrentNumber}
           />
-          <button onClick={this.insertNumber}>+</button>
         </div>
+        <button onClick={this.saveNumber}>Save Number</button>
       </div>
     );
   }
