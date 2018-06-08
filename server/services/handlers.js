@@ -17,7 +17,9 @@ const getUser = (req, res) => {
 };
 
 const initiation = (req, res) => {
+  console.log('initiation');
   const { phoneNumber, email } = req.body;
+  console.log(req.body);
   return checkIsNumberAllowed({ phoneNumber, email })
     .then((user) => {
       if (user) {

@@ -18,7 +18,7 @@ const createToken = (identity) => {
   accessToken.identity = identity;
 
   const grant = new VideoGrant();
-  grant.room = 'Room 1';
+  grant.room = identity.room;
   accessToken.addGrant(grant);
 
   const jwt = accessToken.toJwt();
