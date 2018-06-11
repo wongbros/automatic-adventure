@@ -13,8 +13,9 @@ class Media extends Component {
     console.log('socket:', socket);
     socket.on('token', (token) => {
       console.log('token:', token);
-      Video.connect(token, { name: socket.room })
+      Video.connect(token.token, { name: token.room })
         .then((room) => {
+          console.log(room);
           console.log('Successfully connected to room!', room);
           this.setState({ room });
         }, console.error);

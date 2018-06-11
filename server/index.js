@@ -37,13 +37,20 @@ app.get('/connection', protectRoute, (req, res) => {
         return;
       }
       if (socket) {
-        socket.emit({
-          token: createToken(foundUser.pet_name || 'Pet'),
-          room: foundUser.room,
+        const room = foundUser.room || 'Room 1';
+        socket.emit('token', {
+          token: createToken({
+            identity: foundUser.pet_name || 'Pet',
+            room,
+          }),
+          room,
         });
         res.json({
-          token: createToken(foundUser.name),
-          room: foundUser.room,
+          token: createToken({
+            identity: foundUser.name,
+            room,
+          }),
+          room,
         });
         return;
       }
