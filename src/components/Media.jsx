@@ -10,8 +10,8 @@ class Media extends Component {
 
   componentDidMount() {
     const socket = io(process.env.REACT_APP_SERVER_BASE);
-    socket.on('token', (token) => {
-      Video.connect(token.token, { name: token.room })
+    socket.on('token', ({ token, room: name }) => {
+      Video.connect(token, { name })
         .then((room) => {
           console.log('Successfully connected to room!', room);
           this.setState({ room });
