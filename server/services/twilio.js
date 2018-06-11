@@ -12,13 +12,13 @@ const {
   TWILIO_NUMBER,
 } = process.env;
 
-const createToken = (identity) => {
+const createToken = ({ identity, room }) => {
   const accessToken = new AccessToken(ACCOUNT_SID, API_KEY_SID, API_KEY_SECRET);
 
   accessToken.identity = identity;
 
   const grant = new VideoGrant();
-  grant.room = 'Room 1';
+  grant.room = room;
   accessToken.addGrant(grant);
 
   const jwt = accessToken.toJwt();
