@@ -12,7 +12,7 @@ const {
   TWILIO_NUMBER,
 } = process.env;
 
-const createToken = (identity, room) => {
+const createToken = ({ identity, room }) => {
   const accessToken = new AccessToken(ACCOUNT_SID, API_KEY_SID, API_KEY_SECRET);
 
   accessToken.identity = identity;
