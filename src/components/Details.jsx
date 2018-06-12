@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Input, Button, message } from 'antd';
+import 'antd/dist/antd.css';
 
 class Details extends React.Component {
   static defaultProps = {
@@ -30,6 +32,7 @@ class Details extends React.Component {
   saveUserData = async () => {
     await this.props.saveUserData(this.state);
     this.setEditingMode(false);
+    message.success('Details saved!');
   }
 
   render() {
@@ -37,7 +40,7 @@ class Details extends React.Component {
       <div className="details">
         <h4>Details</h4>
         <div>
-          <input
+          <Input
             type="text"
             disabled={!this.state.isEditing}
             value={this.state.petName}
@@ -46,7 +49,7 @@ class Details extends React.Component {
           />
         </div>
         <div>
-          <input
+          <Input
             type="text"
             disabled={!this.state.isEditing}
             value={this.state.roomName}
@@ -55,9 +58,8 @@ class Details extends React.Component {
           />
         </div>
         {this.state.isEditing ?
-          <button onClick={this.saveUserData}>Save Details</button> :
-          <button onClick={() => this.setEditingMode(true)}>Edit Details</button>}
-
+          <Button type="primary" onClick={this.saveUserData}>Save Details</Button> :
+          <Button type="default" onClick={() => this.setEditingMode(true)}>Edit Details</Button>}
       </div>
     );
   }
