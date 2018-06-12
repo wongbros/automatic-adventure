@@ -1,5 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Input, Button, message } from 'antd';
+import 'antd/dist/antd.css';
 
 class Details extends React.Component {
   static defaultProps = {
@@ -34,6 +36,7 @@ class Details extends React.Component {
   saveUserData = async () => {
     await this.props.saveUserData(this.state);
     this.setState({ petName: '', roomName: '' });
+    message.success('Details saved!');
   }
 
   render() {
@@ -43,20 +46,20 @@ class Details extends React.Component {
         <div>Pet Name: {this.props.petName}</div>
         <div>Room Name: {this.props.roomName}</div>
         <div>
-          <input
+          <Input
             type="text"
             placeholder="Update Pet Name"
             onChange={event => this.update('petName', event.target.value)}
           />
         </div>
         <div>
-          <input
+          <Input
             type="text"
             placeholder="Update Room Name"
             onChange={event => this.update('roomName', event.target.value)}
           />
         </div>
-        <button onClick={this.saveUserData}>Save Details</button>
+        <Button type="primary" onClick={this.saveUserData}>Save Details</Button>
       </div>
     );
   }
