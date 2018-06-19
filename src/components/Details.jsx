@@ -14,17 +14,13 @@ class Details extends React.Component {
   }
 
   state = {
-    petName: '',
-    roomName: '',
+    petName: this.props.petName,
+    roomName: this.props.roomName,
+    isEditing: false,
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.petName !== this.props.petName) {
-      this.setState({ petName: nextProps.petName });
-    }
-    if (nextProps.roomName !== this.props.roomName) {
-      this.setState({ roomName: nextProps.roomName });
-    }
+  setEditingMode = (isEditing) => {
+    this.setState({ isEditing });
   }
 
   update = (stateName, value) => {
@@ -33,18 +29,18 @@ class Details extends React.Component {
 
   saveUserData = async () => {
     await this.props.saveUserData(this.state);
-    this.setState({ petName: '', roomName: '' });
+    this.setEditingMode(false);
   }
 
   render() {
     return (
       <div className="details">
         <h4>Details</h4>
-        <div>Pet Name: {this.props.petName}</div>
-        <div>Room Name: {this.props.roomName}</div>
         <div>
           <input
             type="text"
+            disabled={!this.state.isEditing}
+            value={this.state.petName}
             placeholder="Update Pet Name"
             onChange={event => this.update('petName', event.target.value)}
           />
@@ -52,11 +48,16 @@ class Details extends React.Component {
         <div>
           <input
             type="text"
+            disabled={!this.state.isEditing}
+            value={this.state.roomName}
             placeholder="Update Room Name"
             onChange={event => this.update('roomName', event.target.value)}
           />
         </div>
-        <button onClick={this.saveUserData}>Save Details</button>
+        {this.state.isEditing ?
+          <button onClick={this.saveUserData}>Save Details</button> :
+          <button onClick={() => this.setEditingMode(true)}>Edit Details</button>}
+
       </div>
     );
   }
