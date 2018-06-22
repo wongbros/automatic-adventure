@@ -7,7 +7,7 @@ const app = require('./app');
 const socketio = require('socket.io');
 const { createToken } = require('./services/twilio');
 const { findUser } = require('../db/queries');
-const { urlHash, protectRoute } = require('./services/handlers');
+const { urlHash } = require('./services/handlers');
 
 const {
   PORT,
@@ -16,7 +16,7 @@ const {
 
 let socket;
 
-app.get('/connection', protectRoute, (req, res) => {
+app.get('/connection', (req, res) => {
   const { user, hash } = req.query;
   if (!user || !hash) {
     const error = new Error('Missing fields');

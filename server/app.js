@@ -64,6 +64,6 @@ app.get(
 
 app.post('/save-user', protectRoute, saveUser);
 
-app.post('/initiate', protectRoute, initiation);
+app.post('/initiate', initiation);
 
 module.exports = app;
