@@ -11,8 +11,6 @@ class Settings extends Component {
     phoneNumbers: [],
     petName: '',
     roomName: '',
-    // isShowing: false,
-    // settingsHeader: 'Show Settings',
     tabKey: 'Details',
   };
 
@@ -36,7 +34,6 @@ class Settings extends Component {
       petName,
       roomName,
     });
-    // console.log('state: ', this.state);
   }
 
   saveUserData = async ({ petName, roomName, phoneNumbers }) => {
@@ -49,11 +46,6 @@ class Settings extends Component {
     // re-fetch
     this.getUserData();
   }
-
-  // toggleSettingsView = () => {
-  //   const settingsHeader = !this.state.isShowing ? 'Hide Settings' : 'Show Settings';
-  //   this.setState({ settingsHeader, isShowing: !this.state.isShowing });
-  // }
 
   render() {
     const tabList = [{
