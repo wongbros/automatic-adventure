@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
+import { Layout, Row, Col, Button, Icon } from 'antd';
 import Video from 'twilio-video';
 import io from 'socket.io-client';
 import './Media.css';
+
+const { Header, Content } = Layout;
 
 class Media extends Component {
   state = {
@@ -28,8 +31,24 @@ class Media extends Component {
   render() {
     return (
       <div>
-        <h1>Pet cam has been started!</h1>
-        <a href="/home">Stop</a>
+        <Row>
+          <Col span={12} offset={6}>
+            <Header>
+              Pet Cam Has Been Started!
+            </Header>
+            <Content>
+              <Row type="flex" justify="center">
+                <Col>
+                  <Button ghost type="danger">
+                    <a href="/home">
+                      Stop <Icon type="close-square-o" />
+                    </a>
+                  </Button>
+                </Col>
+              </Row>
+            </Content>
+          </Col>
+        </Row>
       </div>
     );
   }

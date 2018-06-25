@@ -11,8 +11,8 @@ class Settings extends Component {
     phoneNumbers: [],
     petName: '',
     roomName: '',
-    isShowing: false,
-    settingsHeader: 'Show Settings',
+    // isShowing: false,
+    // settingsHeader: 'Show Settings',
     tabKey: 'Details',
   };
 
@@ -21,7 +21,6 @@ class Settings extends Component {
   }
 
   onTabChange = (type, key) => {
-    console.log(key);
     this.setState({ [type]: key });
   }
 
@@ -51,10 +50,10 @@ class Settings extends Component {
     this.getUserData();
   }
 
-  toggleSettingsView = () => {
-    const settingsHeader = !this.state.isShowing ? 'Hide Settings' : 'Show Settings';
-    this.setState({ settingsHeader, isShowing: !this.state.isShowing });
-  }
+  // toggleSettingsView = () => {
+  //   const settingsHeader = !this.state.isShowing ? 'Hide Settings' : 'Show Settings';
+  //   this.setState({ settingsHeader, isShowing: !this.state.isShowing });
+  // }
 
   render() {
     const tabList = [{
@@ -81,27 +80,16 @@ class Settings extends Component {
     return (
       <div>
         <div>
-          <h3>
-            <div
-              onClick={this.toggleSettingsView}
-              onKeyPress={this.toggleSettingsView}
-              tabIndex={0}
-              role="button"
-            >
-              {this.state.settingsHeader}
+          <Card
+            style={{ width: '100%' }}
+            tabList={tabList}
+            activeTabKey={this.state.tabKey}
+            onTabChange={(key) => { this.onTabChange('tabKey', key); }}
+          >
+            <div>
+              {contentList[this.state.tabKey]}
             </div>
-          </h3>
-          {this.state.isShowing &&
-            <Card
-              style={{ width: '100%' }}
-              tabList={tabList}
-              activeTabKey={this.state.tabKey}
-              onTabChange={(key) => { this.onTabChange('tabKey', key); }}
-            >
-              <div>
-                {contentList[this.state.tabKey]}
-              </div>
-            </Card>}
+          </Card>
         </div>
       </div>
     );
