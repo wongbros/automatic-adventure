@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Input, Button, message } from 'antd';
+import { Input, Button, message, Row, Col } from 'antd';
 import 'antd/dist/antd.css';
 
 class Details extends React.Component {
@@ -57,9 +57,13 @@ class Details extends React.Component {
             onChange={event => this.update('roomName', event.target.value)}
           />
         </div>
-        {this.state.isEditing ?
-          <Button type="primary" onClick={this.saveUserData}>Save Details</Button> :
-          <Button type="default" onClick={() => this.setEditingMode(true)}>Edit Details</Button>}
+        <Row type="flex" justify="center">
+          <Col>
+            {this.state.isEditing ?
+              <Button type="primary" onClick={this.saveUserData}>Save Details</Button> :
+              <Button type="default" onClick={() => this.setEditingMode(true)}>Edit Details</Button>}
+          </Col>
+        </Row>
       </div>
     );
   }

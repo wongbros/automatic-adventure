@@ -76,7 +76,11 @@ class Whitelist extends React.Component {
             onChange={this.updateCurrentNumber}
           />
         </div>
-        <Button type="primary" onClick={this.saveNumber}>Save Number</Button>
+        <Row type="flex" justify="center">
+          <Col>
+            <Button type="primary" onClick={this.saveNumber}>Save Number</Button>
+          </Col>
+        </Row>
       </div>
     );
   }
