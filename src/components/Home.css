@@ -11,3 +11,8 @@
   color: #fff;
   line-height: 120px;
 }
+:local(.buttonPosition) {
+  position: absolute;
+  bottom: 50px;
+  width:100%
+}

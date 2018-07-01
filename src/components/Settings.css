@@ -1,0 +1,9 @@
+:local(.margins) {
+  margin-bottom: 10px;
+}
+:local(.deleteBtn) {
+  float: right;
+}
+:local(.maxWidth) {
+  width: 100%;
+}
