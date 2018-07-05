@@ -1,0 +1,17 @@
+.ant-layout-header,
+.ant-layout-footer {
+  background: #7dbcea;
+  color: #fff;
+}
+
+.ant-layout-sider {
+  background: #3ba0e9;
+  color: #fff;
+  line-height: 120px;
+}
+
+.button-position {
+  position: absolute;
+  bottom: 50px;
+  width: 100%
+}

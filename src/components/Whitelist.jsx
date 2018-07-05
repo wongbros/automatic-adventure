@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './Whitelist.css';
+import { Input, Icon, Button, Popconfirm, List, Col, Row, message } from 'antd';
+import 'antd/dist/antd.css';
+import './Settings.css';
 
 class Whitelist extends React.Component {
   static defaultProps = {
@@ -34,6 +36,7 @@ class Whitelist extends React.Component {
     const updatedNumberList = [...this.props.phoneNumbers];
     updatedNumberList.splice(index, 1);
     this.props.saveUserData({ phoneNumbers: updatedNumberList });
+    message.success('Phone number deleted!');
   }
 
   render() {
@@ -41,24 +44,43 @@ class Whitelist extends React.Component {
       <div className="whitelist">
         <h4>Whitelist Numbers</h4>
         <div>
-          <ul>
-            {this.props.phoneNumbers.map((phoneNumber, index) => (
-              <li key={`phone-${phoneNumber}`}>
-                {phoneNumber}
-                <button onClick={() => this.deleteNumber(index)}>X</button>
-              </li>
-            ))}
-          </ul>
+          <List
+            dataSource={this.props.phoneNumbers}
+            renderItem={(phoneNumber, index) => (
+              <List.Item>
+                <Row className="max-width" type="flex" justify="space-between">
+                  <Col span={4}>
+                    {phoneNumber}
+                  </Col>
+                  <Col span={4} offset={8}>
+                    <Popconfirm
+                      title="Are you sure you want to delete this number?"
+                      onConfirm={() => this.deleteNumber(index)}
+                      okText="Yes"
+                      cancelText="No"
+                    >
+                      <Button className="delete-btn" size="small" type="danger" ghost>
+                        <Icon type="delete" />
+                      </Button>
+                    </Popconfirm>
+                  </Col>
+                </Row>
+              </List.Item>)}
+          />
         </div>
-        <div>
-          <input
+        <div className="margins">
+          <Input
             type="text"
             value={this.state.phoneNumber}
             placeholder="Add Phone Number"
             onChange={this.updateCurrentNumber}
           />
         </div>
-        <button onClick={this.saveNumber}>Save Number</button>
+        <Row type="flex" justify="center">
+          <Col>
+            <Button type="primary" onClick={this.saveNumber}>Save Number</Button>
+          </Col>
+        </Row>
       </div>
     );
   }

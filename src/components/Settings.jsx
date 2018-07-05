@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Card } from 'antd';
+import 'antd/dist/antd.css';
 import Whitelist from './Whitelist';
 import Details from './Details';
 import { getUserData, saveUserData } from '../service';
-import './Settings.css';
 
 class Settings extends Component {
   state = {
@@ -10,12 +11,15 @@ class Settings extends Component {
     phoneNumbers: [],
     petName: '',
     roomName: '',
-    isShowing: false,
-    settingsHeader: 'Show Settings',
+    tabKey: 'Details',
   };
 
   async componentDidMount() {
     await this.getUserData();
+  }
+
+  onTabChange = (type, key) => {
+    this.setState({ [type]: key });
   }
 
   getUserData = async () => {
@@ -30,7 +34,6 @@ class Settings extends Component {
       petName,
       roomName,
     });
-    // console.log('state: ', this.state);
   }
 
   saveUserData = async ({ petName, roomName, phoneNumbers }) => {
@@ -44,39 +47,41 @@ class Settings extends Component {
     this.getUserData();
   }
 
-  toggleSettingsView = () => {
-    const settingsHeader = !this.state.isShowing ? 'Hide Settings' : 'Show Settings';
-    this.setState({ settingsHeader, isShowing: !this.state.isShowing });
-  }
-
   render() {
+    const tabList = [{
+      key: 'Details',
+      tab: 'Details',
+    },
+    {
+      key: 'Whitelist',
+      tab: 'Whitelist',
+    }];
+    const contentList = {
+      Details: <Details
+        saveUserData={this.saveUserData}
+        email={this.state.email}
+        petName={this.state.petName}
+        roomName={this.state.roomName}
+      />,
+      Whitelist: <Whitelist
+        saveUserData={this.saveUserData}
+        email={this.state.email}
+        phoneNumbers={this.state.phoneNumbers}
+      />,
+    };
     return (
       <div>
         <div>
-          <h3>
-            <div
-              onClick={this.toggleSettingsView}
-              onKeyPress={this.toggleSettingsView}
-              tabIndex={0}
-              role="button"
-            >
-              {this.state.settingsHeader}
-            </div>
-          </h3>
-          {this.state.isShowing &&
+          <Card
+            style={{ width: '100%' }}
+            tabList={tabList}
+            activeTabKey={this.state.tabKey}
+            onTabChange={(key) => { this.onTabChange('tabKey', key); }}
+          >
             <div>
-              <Details
-                saveUserData={this.saveUserData}
-                email={this.state.email}
-                petName={this.state.petName}
-                roomName={this.state.roomName}
-              />
-              <Whitelist
-                saveUserData={this.saveUserData}
-                email={this.state.email}
-                phoneNumbers={this.state.phoneNumbers}
-              />
-            </div>}
+              {contentList[this.state.tabKey]}
+            </div>
+          </Card>
         </div>
       </div>
     );

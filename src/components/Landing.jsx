@@ -1,12 +1,23 @@
 import React from 'react';
+import { Layout, Row, Col, Button, Icon } from 'antd';
 import './Landing.css';
+
+const { Header } = Layout;
 
 const Landing = () => (
   <div>
-    <h1>Landing</h1>
-    <div>
-      <a href={`${process.env.REACT_APP_SERVER_BASE}/login`}>Login</a>
-    </div>
+    <Header>
+      <Row type="flex" justify="space-between">
+        <Col span={4}>
+          Landing
+        </Col>
+        <Col>
+          <Button>
+            <a href={`${process.env.REACT_APP_SERVER_BASE}/login`}>Sign in with Google <Icon type="google" /></a>
+          </Button>
+        </Col>
+      </Row>
+    </Header>
   </div>
 );
 
