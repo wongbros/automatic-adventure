@@ -1,9 +1,11 @@
-:local(.margins) {
+.margins {
   margin-bottom: 10px;
 }
-:local(.deleteBtn) {
+
+.delete-btn {
   float: right;
 }
-:local(.maxWidth) {
+
+.max-width {
   width: 100%;
 }

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Layout, Row, Col, Collapse, Button, Icon } from 'antd';
 import Settings from './Settings';
-import styles from './Home.css';
+import './Home.css';
 
 const { Header, Content } = Layout;
 const { Panel } = Collapse;
@@ -17,7 +17,7 @@ class Home extends Component {
             <Col span={4}>
               Home
             </Col>
-            <Col span={4} offset={12}>
+            <Col>
               <Button type="danger">
                 <a href={`${process.env.REACT_APP_SERVER_BASE}/logout`}>Logout</a>
               </Button>
@@ -31,10 +31,10 @@ class Home extends Component {
             </Panel>
           </Collapse>
         </Content>
-        <Row className={styles.buttonPosition} type="flex" justify="center" align="bottom">
+        <Row className="button-position" type="flex" justify="center" align="bottom">
           <Col>
             <Button>
-              <a href="/media">Start Camera <Icon type="camera-o" /></a>
+              <a href="/media">Start Camera <Icon type="video-camera" /></a>
             </Button>
           </Col>
         </Row>

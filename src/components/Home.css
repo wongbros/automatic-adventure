@@ -3,16 +3,15 @@
   background: #7dbcea;
   color: #fff;
 }
-.ant-layout-footer {
-  line-height: 1.5;
-}
+
 .ant-layout-sider {
   background: #3ba0e9;
   color: #fff;
   line-height: 120px;
 }
-:local(.buttonPosition) {
+
+.button-position {
   position: absolute;
   bottom: 50px;
-  width:100%
+  width: 100%
 }

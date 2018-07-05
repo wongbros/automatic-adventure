@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Layout, Row, Col, Button, Icon } from 'antd';
 import Video from 'twilio-video';
 import io from 'socket.io-client';
-import styles from './Media.css';
+import './Media.css';
 
 const { Header, Content } = Layout;
 
@@ -35,7 +35,7 @@ class Media extends Component {
           Pet Cam Has Been Started!
         </Header>
         <Content>
-          <Row className={styles.buttonPosition} type="flex" justify="center">
+          <Row className="button-position" type="flex" justify="center">
             <Col>
               <Button ghost type="danger">
                 <a href="/home">

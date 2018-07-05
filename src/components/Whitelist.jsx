@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Icon, Button, Popconfirm, List, Col, Row, message } from 'antd';
 import 'antd/dist/antd.css';
-import styles from './Settings.css';
+import './Settings.css';
 
 class Whitelist extends React.Component {
   static defaultProps = {
@@ -48,7 +48,7 @@ class Whitelist extends React.Component {
             dataSource={this.props.phoneNumbers}
             renderItem={(phoneNumber, index) => (
               <List.Item>
-                <Row className={styles.maxWidth} type="flex" justify="space-between">
+                <Row className="max-width" type="flex" justify="space-between">
                   <Col span={4}>
                     {phoneNumber}
                   </Col>
@@ -59,7 +59,7 @@ class Whitelist extends React.Component {
                       okText="Yes"
                       cancelText="No"
                     >
-                      <Button className={styles.deleteBtn} size="small" type="danger" ghost>
+                      <Button className="delete-btn" size="small" type="danger" ghost>
                         <Icon type="delete" />
                       </Button>
                     </Popconfirm>
@@ -68,7 +68,7 @@ class Whitelist extends React.Component {
               </List.Item>)}
           />
         </div>
-        <div className={styles.margins}>
+        <div className="margins">
           <Input
             type="text"
             value={this.state.phoneNumber}

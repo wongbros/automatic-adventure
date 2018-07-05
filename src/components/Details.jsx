@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Input, Button, message, Row, Col } from 'antd';
 import 'antd/dist/antd.css';
-import styles from './Settings.css';
+import './Settings.css';
 
 class Details extends React.Component {
   static defaultProps = {
@@ -40,7 +40,7 @@ class Details extends React.Component {
     return (
       <div className="details">
         <h4>Details</h4>
-        <div className={styles.margins}>
+        <div className="margins">
           <Input
             type="text"
             disabled={!this.state.isEditing}
@@ -49,7 +49,7 @@ class Details extends React.Component {
             onChange={event => this.update('petName', event.target.value)}
           />
         </div>
-        <div className={styles.margins}>
+        <div className="margins">
           <Input
             type="text"
             disabled={!this.state.isEditing}

@@ -11,7 +11,7 @@ const Landing = () => (
         <Col span={4}>
           Landing
         </Col>
-        <Col span={4} offset={12}>
+        <Col>
           <Button>
             <a href={`${process.env.REACT_APP_SERVER_BASE}/login`}>Sign in with Google <Icon type="google" /></a>
           </Button>
